@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/images/favicon.ico">
+
+    <title>小小说说</title>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+        body{
+            font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+            margin:0;
+        }
+
+        /*main的样式*/
+        .el-main {
+            background-color: #FFF;
+            color: #333;
+        }
+
+        /*未登录页面页眉*/
+        .header{
+            background-color: #409EFF;
+        }
+
+        /*登录表单*/
+        .login-form{
+            vertical-align: middle;
+            padding: 50px;
+            text-align: center;
+        }
+        .el-form-item{
+            margin:45px 0px;
+        }
+        /*轮播图*/
+        .el-carousel{
+            border:1px solid #CCC
+        }
+        .el-carousel__container{
+            overflow: hidden;
+        }
+        .el-carousel__item{
+            background-color: #F2F6FC;
+            color: #404040;
+            padding-top: 60px;
+            padding-left: 60px;
+        }
+        .el-carousel__item h1 {
+            line-height: 100px;
+            margin: 10px;
+            font-family: Yuanti SC;
+            font-size: 50px;
+            font-weight:normal;
+        }
+        .el-carousel__item p{
+            margin:10px;
+            font-size: 23px;
+        }
+
+        /*导航栏*/
+        .my-name{
+            color: #409EFF !important;
+            font-weight: bold;
+        }
+        .push-right{
+            float:right !important;
+        }
+        .nav-list{
+            position: fixed;
+            width: 100%;
+            left: 0;
+            top: 0;
+            z-index: 1500;
+        }
+        /*头像样式*/
+        .avatar-img{
+            border: #DCDFE6 solid 2px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+        }
+
+        /*主要区域样式*/
+        .main-talklist,.my-talklist,.member-list{
+            margin-top: 70px;
+        }
+
+        /*动态发布文本域*/
+        textarea{
+            resize: none !important;
+            font-size: 19px !important;
+        }
+        /*发送动态按钮*/
+        .send-btn{
+            margin-top: 8px;
+        }
+        /*剩余字数显示*/
+        .last-num{
+            line-height: 60px;
+            margin-right: 20px;
+            color: #CCC;
+        }
+        /*添加图片按钮*/
+        .add-picture-btn{
+            margin-top: 8px;
+        }
+        /*所有动态卡片*/
+        .talk-card{
+            margin-top: 13px;
+        }
+        .el-card__header{
+            padding:10px 10px 2px;
+        }
+        .el-card__header span{
+            font-size: 18px;
+            margin-left: 5px;
+            color: #409EFF;
+            vertical-align: top;
+        }
+        .card-username{
+            line-height: 50px;
+        }
+        .card-body{
+            padding: 10px;
+        }
+        .card-body .el-textarea{
+            font-size:19px !important;
+        }
+        .card-body .talk-images{
+            border: 2px #dcdfe6 solid;
+            margin-top: 8px;
+            vertical-align: top;
+            margin-right: 8px;
+            width: 15%;
+        }
+        .card-footer{
+            padding-top: 10px;
+        }
+        .card-footer .time{
+            font-size: 14px;
+        }
+        .card-footer .zan{
+            font-size: 18px;
+            line-height: 48px;
+            margin-right: 3px;
+            color: #409EFF;
+        }
+        .card-footer .zanNum{
+            font-size: 14px;
+            margin-right: 15px;
+        }
+        /*回复按钮样式*/
+        .reply-btn{
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: 20px;
+        }
+        /*评论列表样式*/
+        .reply-list{
+            margin-top: 10px;
+            font-size: 14px;
+            line-height: 30px;
+            vertical-align: top;
+        }
+        /*评论时间*/
+        .reply-time{
+            font-size: 12px;
+            line-height: 12px;
+        }
+        .reply-list a{
+            color:#409EFF;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        /*修改密码模态框*/
+        #old-pwd,#new-pwd,#ok-new-pwd{
+            margin: 15px 0 0;
+        }
+
+        /*修改头像模态框*/
+        .avatar-uploader{
+            text-align: center;
+        }
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+
+        /*我的说说页面*/
+        .my-talklist .delete-talk{
+            line-height: 50px;
+            vertical-align: middle;
+        }
+        .my-talklist .delete-talk:hover{
+            cursor: pointer;
+            color: #F56C6C;
+        }
+        /*成员列表页面*/
+        .member-card{
+            margin-top: 20px;
+        }
+        .memcard-body .avatar-img{
+            width: 168px;
+            height: 168px;
+            margin-right: 10px;
+            display: inline-block;
+        }
+        .memcard-body .member-info{
+            display: inline-block;
+            vertical-align: top;
+            line-height: 50px;
+            list-style: none;
+        }
+        .memcard-body .member-info li{
+            font-size: 16px;
+        }
+        .memcard-body .member-info li span{
+            margin: 0 5px;
+            color: #409EFF;
+            font-size: 18px;
+        }
+        .memlist-signature{
+            font-size: 17px !important;
+            color: #303133 !important;
+        }
+        /*测试边界*/
+        .border-test{
+            border: 1px red solid;
+        }
+    </style>
+</head>
+
+<body>
+<div id="show-index" v-cloak>
+   
+<div v-if="unlogin">
+    <el-container>
+        <el-header class="header"></el-header>
+        <el-main>
+            <el-row type="flex" justify="center">
+                <el-col :span="20">
+                    <el-carousel :interval="4000" height="300px">
+                        <el-carousel-item>
+                            <h1>欢迎使用小小说说</h1>
+                            <p>要查看或发布动态，请先登录</p>
+                        </el-carousel-item>
+                        <el-carousel-item>
+                            <h1>发布动态</h1>
+                            <p>你可以随时把开心的，伤心的，好玩的，有意思的事跟大家分享，只要你愿意。</p>
+                        </el-carousel-item>
+                        <el-carousel-item>
+                            <h1>查看动态</h1>
+                            <p>你可以看看别人都碰到了哪些好玩的事，遇到了哪些有趣的人。你也可以点赞，评论。</p>
+                        </el-carousel-item>
+                        <el-carousel-item>
+                            <h1>查看成员</h1>
+                            <p>在这里，你可以知道使用小小说说的都是哪些人，他们都有哪些好玩的点子。</p>
+                        </el-carousel-item>
+                    </el-carousel>
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="center">
+                <el-col :span="6">
+                    <el-form ref="form" class="login-form">
+                        <el-form-item>
+                            <el-input v-model="inputUsername"
+                                      @keyup.enter.native="loginMethod"
+                                      maxlength="10"
+                                      type="text"
+                                      placeholder="昵称(至少3位 可以中文)"
+                                      id="username"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-input v-model="inputPassword"
+                                      @keyup.enter.native="loginMethod"
+                                      maxlength="15"
+                                      type="password"
+                                      placeholder="密码(至少6位)"
+                                      id="password"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary"  @click="loginMethod" id="btn-login">登录</el-button>
+                            <el-button @click="signinMethod" id="btn-signin">注册</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+            </el-row>
+        </el-main>
+    </el-container>
+</div>
+<div v-else>
+    <!--导航栏-->
+    <el-container class="nav-list">
+        <el-header>
+            <el-row>
+                <el-col :span="18" :offset="3">
+                    <el-menu mode="horizontal"
+                             :default-active="'1'">
+                        <el-menu-item index="1" @click="allTalk">所有说说</el-menu-item>
+                        <el-menu-item index="2" @click="myTalk">我的说说</el-menu-item>
+                        <el-menu-item index="3" @click="members">成员列表</el-menu-item>
+                        <el-menu-item index="7" class="push-right" @click="quitMethod">退出登录</el-menu-item>
+                        <el-menu-item index="6" class="push-right" @click="dialogUpdatePwd=true">修改个人信息</el-menu-item>
+                        <el-menu-item index="5" class="push-right my-name">{{username}}</el-menu-item>
+                        <el-menu-item index="4" class="push-right">
+                            <el-popover placement="bottom"
+                                        title="签名"
+                                        width="200"
+                                        trigger="hover"
+                                        transition="el-zoom-in-top"
+                                        :content="signature">
+                                <img :src="'/avatar/'+avatar"
+                                     class="avatar-img"
+                                     slot="reference"
+                                     @click="dialogModifyAvatar=true">
+                            </el-popover>
+                        </el-menu-item>
+                    </el-menu>
+                </el-col>
+            </el-row>
+        </el-header>
+    </el-container>
+    <!--全部说说列表-->
+    <div v-if="mainContainer" class="main-talklist">
+        <el-container>
+            <el-main>
+                <el-row>
+                    <el-col :span="16" :offset="4">
+                        <el-input
+                                type="textarea"
+                                :rows="7"
+                                placeholder="有什么想和大家分享的？"
+                                v-model.trim="inputStatusContent"
+                                @keyup.native="changeLastNum"
+                                maxlength="300">
+                        </el-input>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="2" :offset="4">
+                        <el-button icon="el-icon-picture" class="add-picture-btn" @click="addPicture">添加图片</el-button>
+                    </el-col>
+                    <el-col :span="2" :offset="12">
+                        <span class="last-num">{{lastNum}}</span>
+                        <el-button @click="sendStatus" type="success" class="push-right send-btn">发送</el-button>
+                    </el-col>
+                </el-row>
+                <el-row v-if="imagesShow">
+                    <el-col :span="16" :offset="4">
+                        <el-upload
+                                action="/uploadImg"
+                                list-type="picture-card"
+                                accept="image/*"
+                                :limit="3"
+                                :on-success="imageUploadSuccess"
+                                :on-remove="imageRemove">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-col>
+                </el-row>
+                <el-row v-for="(result, index) in listResult" :key="result._id">
+                    <el-col :span="16" :offset="4">
+                        <el-card class="talk-card">
+                            <div slot="header">
+                                <img :src="'/avatar/'+result.avatarPath" class="avatar-img">
+                                <span class="card-username">{{result.username}}</span>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <el-input
+                                            type="textarea"
+                                            :rows="8"
+                                            autosize
+                                            :value="result.talkContent"
+                                            readonly>
+                                    </el-input>
+                                </div>
+                                <div v-if="showImagesCon(result)">
+                                    <img v-for="image in result.talkImages" :src="image" class="talk-images">
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <el-collapse>
+                                    <el-collapse-item>
+                                        <template slot="title">
+                                            <span class="time">{{(new Date(result.time)).toLocaleString()}}</span>
+                                            <span class="zan zanNum push-right">{{result.commentNum}}</span>
+                                            <i class="el-icon-message push-right zan"></i>
+                                            <span class="zan zanNum push-right">{{result.zanNum}}</span>
+                                            <i v-if="isZan(result)"
+                                               @click.stop="cancelZan(result)"
+                                               class="el-icon-star-on push-right zan">
+                                            </i>
+                                            <i v-if="!isZan(result)"
+                                               @click.stop="zan(result)"
+                                               class="el-icon-star-off push-right zan">
+                                            </i>
+                                        </template>
+                                        <div>
+                                            <el-input type="textarea"
+                                                      :rows="3"
+                                                      placeholder="说说你的看法吧"
+                                                      v-model.trim="replyTextarea"
+                                                      maxlength="100">
+                                            </el-input>
+                                        </div>
+                                        <el-row>
+                                            <el-col :span="2" :offset="22">
+                                                <el-button @click="replayBtn(result)" type="success" size="small" class="reply-btn">回复</el-button>
+                                            </el-col>
+                                        </el-row>
+                                        <el-card class="reply-list">
+                                            <span v-if="result.commentNum==0">还没有评论</span>
+                                            <div v-for="comment in result.commentContent" :key="">
+                                                <a @click="replyToUser(comment)" href="javascript:;">{{comment.replyUser}}：</a>
+                                                <span class="reply-content">{{comment.replyContent}}</span>
+                                                <div class="reply-time">{{(new Date(comment.replyTime)).toLocaleString()}}</div>
+                                            </div>
+                                        </el-card>
+                                    </el-collapse-item>
+                                </el-collapse>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </el-main>
+        </el-container>
+    </div>
+
+    <!--我的说说列表-->
+    <div v-if="myTalklist" class="my-talklist">
+        <el-container>
+            <el-main>
+                <el-row v-if="myTalkResult.length==0"><el-col :span="16" :offset="4"><span>未发表过说说</span></el-col></el-row>
+                <el-row v-for="(result, index) in myTalkResult" :key="result._id">
+                    <el-col :span="16" :offset="4">
+                        <el-card class="talk-card">
+                            <div slot="header">
+                                <img :src="'/avatar/'+result.avatarPath" class="avatar-img">
+                                <span class="card-username">{{result.username}}</span>
+                                <i @click="deleteMyTalk(result)" class="el-icon-delete push-right delete-talk" title="删除这条说说"></i>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <el-input type="textarea"
+                                              :rows="8" autosize
+                                              :value="result.talkContent"
+                                              readonly>
+                                    </el-input>
+                                </div>
+                                <div v-if="showImagesCon(result)">
+                                    <img v-for="image in result.talkImages" :src="image" class="talk-images">
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <el-collapse>
+                                    <el-collapse-item>
+                                        <template slot="title">
+                                            <span class="time">{{(new Date(result.time)).toLocaleString()}}</span>
+                                            <span class="zan zanNum push-right">{{result.commentNum}}</span>
+                                            <i class="el-icon-message push-right zan"></i>
+                                            <span class="zan zanNum push-right">{{result.zanNum}}</span>
+                                            <i v-if="isZan(result)"
+                                               class="el-icon-star-on push-right zan">
+                                            </i>
+                                            <i v-if="!isZan(result)"
+                                               class="el-icon-star-off push-right zan">
+                                            </i>
+                                        </template>
+                                        <el-card class="reply-list">
+                                            <span v-if="result.commentNum==0">还没有评论</span>
+                                            <div v-for="comment in result.commentContent" :key="">
+                                                <a href="javascript:;">{{comment.replyUser}}：</a>
+                                                <span class="reply-content">{{comment.replyContent}}</span>
+                                                <div class="reply-time">{{(new Date(comment.replyTime)).toLocaleString()}}</div>
+                                            </div>
+                                        </el-card>
+                                    </el-collapse-item>
+                                </el-collapse>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </el-main>
+        </el-container>
+    </div>
+
+    <!--成员列表-->
+    <div v-if="memberlist" class="member-list">
+        <el-container>
+            <el-main>
+                <el-row v-for="(result, index) in memberResult" :key="result._id">
+                    <el-col :span="16" :offset="4">
+                        <el-card class="member-card">
+                            <div slot="header">
+                                <span class="memlist-signature">{{result.signature}}</span>
+                            </div>
+                            <div class="memcard-body">
+                                <img :src="'/avatar/'+result.avatar" class="avatar-img">
+                                <ul class="member-info">
+                                    <li><span>{{result.username}}</span></li>
+                                    <li>共获得<span>{{result.sumZan}}</span>次赞</li>
+                                    <li>发过<span>{{result.sumTalk}}</span>条动态</li>
+                                </ul>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </el-main>
+        </el-container>
+    </div>
+</div>
+    <!--修改个人信息模态框-->
+    <el-dialog title="修改个人信息"
+               :visible.sync="dialogUpdatePwd"
+               width="30%">
+        <el-form>
+            <el-input v-model.trim="signature"
+                      type="text"
+                      id="signature"
+                      maxlength="50"
+                      placeholder="输入签名">
+                <el-button slot="append" @click="modifySign">修改</el-button>
+            </el-input>
+            <el-input maxlength="15"
+                      type="password"
+                      placeholder="输入旧密码"
+                      id="old-pwd">
+            </el-input>
+            <el-input maxlength="15"
+                      type="password"
+                      placeholder="输入新密码(至少6位)"
+                      id="new-pwd">
+            </el-input>
+            <el-input maxlength="15"
+                      type="password"
+                      placeholder="确认新密码"
+                      id="ok-new-pwd">
+            </el-input>
+        </el-form>
+        <div slot="footer">
+            <el-button @click="dialogUpdatePwd = false">取 消</el-button>
+            <el-button type="primary" @click="updatePwd">确 定</el-button>
+        </div>
+    </el-dialog>
+
+    <!--修改头像模态框-->
+    <el-dialog title="修改头像(请自行裁剪)"
+               :visible.sync="dialogModifyAvatar"
+               width="20%"
+               center>
+        <el-upload
+                class="avatar-uploader"
+                action="/modiavatar"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <div slot="footer">
+            <el-button type="primary" @click="modifyAvatarOk">确 定</el-button>
+        </div>
+    </el-dialog>
+</div>
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<!--页面自身的js文件-->
+<script>
+
+    var indexShow = new Vue({
+        el:'#show-index',
+        data: {
+            //页面初始化参数
+            unlogin:true,
+            username:'',
+            avatar:'',
+            listResult: [],
+            //登陆注册输入框参数
+            inputUsername:'',
+            inputPassword:'',
+            //发表动态文本框参数
+            inputStatusContent:'',
+            lastNum:300,
+            // 控制三个页面切换参数
+            mainContainer:true,
+            myTalklist:false,
+            memberlist:false,
+            // 我的说说页面数据
+            myTalkResult:[],
+            //所有用户页面数据
+            memberResult:[],
+            //回复框中的值
+            replyTextarea:'',
+            //修改密码模态框打开状态
+            dialogUpdatePwd:false,
+            //修改头像模态框打开状态
+            dialogModifyAvatar:false,
+            //头像图片url
+            imageUrl:'',
+            //文件选择
+            files:[],
+            imagesShow:false,
+            //签名内容
+            signature:''
+        },
+        created: function () {
+            var _this = this;
+            $.get('/getindexdata',function(data, status){
+                _this.unlogin = data.unlogin;
+                _this.username = data.username;
+                _this.avatar = data.avatar;
+                _this.listResult = data.listResult;
+                _this.signature = data.signature;
+                for(var i=0;i<_this.listResult.length;i++){
+                    if(_this.myTalkResult.indexOf(_this.listResult[i])==-1 &&
+                        _this.listResult[i].username == _this.username){
+                        _this.myTalkResult.push(_this.listResult[i]);
+                    }
+                }
+            });
+        },
+        methods: {
+
+            //判断当前的动态点赞图标是否应该高亮
+            isZan: function (result) {
+
+                if(result.zanPerson.indexOf(this.username) != -1){
+                    return true;
+                }else{
+                    return false;
+                }
+            },
+
+            //登录按钮点击
+            loginMethod: function(){
+                var _this = this;
+                if(!this.inputUsername||!this.inputPassword){
+                    this.$message({
+                        message: '用户名和密码不能为空',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                if(this.inputUsername.length<3 || this.inputPassword.length<6){
+                    this.$message({
+                        message: '用户名要多于3位 密码要多于6位',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                $.post('/dologin', {
+                    username: this.inputUsername,
+                    password: this.inputPassword
+                }, function(data, status){
+                    if(data.result==1){
+                        //登录成功
+                        window.location.href="/";
+                    }
+                    else if(data.result==-1){
+                        // 用户名不存在
+                        _this.$message({
+                            message: '用户名不存在',
+                            type: 'error'
+                        });
+                    }
+                    else if(data.result==-2){
+                        // 密码错误
+                        _this.$message({
+                            message: '密码错误',
+                            type: 'error'
+                        });
+                    }else{
+                        // 未知错误
+                        _this.$message({
+                            message: '登录失败，未知错误',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            // 注册按钮点击事件
+            signinMethod: function(){
+                var _this = this;
+                if(!this.inputUsername||!this.inputPassword){
+                    _this.$message({
+                        message: '用户名和密码不能为空',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                if(this.inputUsername.length<3 || this.inputPassword.length<6){
+                    _this.$message({
+                        message: '用户名要多于3位，密码要多于6位',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                $.post('/dosign', {
+                    username: this.inputUsername,
+                    password: this.inputPassword
+                }, function(data, status){
+                    if(data.result==1){
+                        window.location.href="/";
+                    }
+                    else if(data.result == -2){
+                        // 未知错误
+                        _this.$message({
+                            message: '注册失败，未知错误',
+                            type: 'error'
+                        });
+                    }
+                    else{
+                        // 注册失败
+                        _this.$message({
+                            message: '用户名已存在',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            // 添加图片按钮点击
+            addPicture: function(){
+                this.imagesShow = !this.imagesShow;
+            },
+            // 发送动态按钮点击事件
+            sendStatus: function(){
+                if(this.inputStatusContent.length==0){
+                    return;
+                }
+                var _this = this;
+                $.get('/sendstate', {
+                    'talkContent': this.inputStatusContent,
+                    'talkImages':_this.files
+                }, function(data, status){
+                    if(data.result==1){
+                        var newStatus = {
+                            _id:data._id,
+                            avatarPath:_this.avatar,
+                            commentContent:[],
+                            commentNum:0,
+                            talkContent:_this.inputStatusContent,
+                            time:(new Date()),
+                            username:_this.username,
+                            zanNum:0,
+                            zanPerson:[],
+                            talkImages:_this.files,
+                        };
+                        _this.listResult.unshift(newStatus);
+                        _this.myTalkResult.unshift(newStatus);
+                        _this.inputStatusContent='';
+                        _this.lastNum = 300;
+                        _this.imagesShow = false;
+                        _this.files = [];
+                    }else{
+                        _this.$message({
+                            message: '发送失败',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            //判断动态列表中的图片容器是否需要显示
+            showImagesCon: function(result){
+                if(!result.talkImages || result.talkImages.length==0){
+                    return false;
+                }else{
+                    return true;
+                }
+            },
+            // 监听发送动态文本框的改变
+            changeLastNum: function(){
+                var size = this.inputStatusContent.length;
+                this.lastNum = 300 - size;
+            },
+            // 退出账户
+            quitMethod: function () {
+                $.get('/quit',function(data, status){
+                    if(data.result==1){
+                        window.location.href = '/';
+                    }else{
+                        _this.$message({
+                            message: '退出失败',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            // 显示所有说说页面
+            allTalk: function () {
+                this.mainContainer = true;
+                this.myTalklist = false;
+                this.memberlist = false;
+            },
+            // 显示我的说说页面
+            myTalk: function () {
+                var _this = this;
+                _this.mainContainer = false;
+                _this.memberlist = false;
+                _this.myTalklist = true;
+            },
+            // 显示成员列表页面
+            members: function () {
+                this.mainContainer = false;
+                this.myTalklist = false;
+                this.memberlist = true;
+                var _this = this;
+                $.get('/allmembers', function(data, status) {
+                    if (data.result == 1) {
+                        _this.memberResult = data.userList;
+                    }else{
+                        _this.$message({
+                            message: '发生错误',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            //删除我的说说
+            deleteMyTalk:function (currList) {
+                var _this = this;
+                $.get('/deletetalk', {
+                    '_id':currList._id
+                }, function(data, status){
+                    if(data.result==1){
+                        var index = _this.myTalkResult.indexOf(currList);
+                        _this.myTalkResult.splice(index, 1);
+                        index = _this.listResult.indexOf(currList);
+                        _this.listResult.splice(index, 1);
+                    }else{
+                        _this.$message({
+                            message: '发生错误',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            // 点赞
+            zan: function (currList) {
+                var _this = this;
+                $.get('/dozan', {
+                    '_id':currList._id,
+                    'username':currList.username
+                }, function(data, status){
+                    if(data.result==1){
+                        // 显示赞过图标
+                        currList.zanPerson.push(_this.username);
+                        currList.zanNum += 1;
+                        return;
+                    }else{
+                        _this.$message({
+                            message: '发生错误',
+                            type: 'error'
+                        });
+                    }
+                });
+
+            },
+            //取消点赞
+            cancelZan:function(currList){
+                var _this = this;
+                $.get('/docancelzan',{
+                    '_id':currList._id,
+                    'username':currList.username
+                }, function (data, status) {
+                    if(data.result==1){
+                        // 显示未赞过图标
+                        currList.zanPerson.splice(currList.zanPerson.indexOf(_this.username),1);
+                        if(currList.zanNum>0){
+                            currList.zanNum -= 1;
+                        }
+                        return;
+                    }else{
+                        _this.$message({
+                            message: '发生错误',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            //回复按钮
+            replayBtn: function(currList){
+                var _this = this;
+                if(_this.replyTextarea.length==0){
+                    return;
+                }
+                $.get('/replay',{
+                    'textContent':_this.replyTextarea,
+                    'replyUsername': currList.username,
+                    '_id': currList._id
+                }, function(data, status){
+                    if(data.result==1){
+                        currList.commentContent.unshift({
+                            'replyUser':data.replyUser,
+                            'replyContent':_this.replyTextarea,
+                            'replyTime':data.replyTime
+                        });
+                        currList.commentNum += 1;
+                        _this.replyTextarea = '';
+                    }else{
+                        _this.$message({
+                            message: '发生错误',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            // 评论中回复
+            replyToUser: function (comment) {
+                this.replyTextarea = '@'+comment.replyUser+'： ';
+            },
+            // 修改密码模态框的确定按钮
+            updatePwd: function () {
+                var oldPwd = document.getElementById('old-pwd').value;
+                var newPwd = document.getElementById('new-pwd').value;
+                var okNewPwd = document.getElementById('ok-new-pwd').value;
+                var _this = this;
+                if(!oldPwd || !newPwd || !okNewPwd){
+                    _this.$message({
+                        message: '输入框不能为空',
+                        type: 'warning'
+                    });
+                    return;
+                }
+
+                if(oldPwd.length < 6 || newPwd.length < 6 || okNewPwd.length < 6){
+
+                    _this.$message({
+                        message: '密码不少于6位',
+                        type: 'warning'
+                    });
+                    return;
+                }
+
+                if(newPwd != okNewPwd){
+                    _this.$message({
+                        message: '两次输入的密码不一致',
+                        type: 'warning'
+                    });
+                    return;
+                }
+
+                $.post('/updatepwd', {
+                    oldPwd:oldPwd,
+                    newPwd:newPwd
+                }, function(data, status){
+                    if(data.result==1){
+                        _this.$message({
+                            message: '修改成功',
+                            type: 'success'
+                        });
+                        _this.dialogUpdatePwd = false;
+                    }
+                    else if(data.result==-1){
+                        _this.$message({
+                            message: '修改失败，未知错误',
+                            type: 'error'
+                        });
+                    }
+                    else if(data.result==-2){
+                        _this.$message({
+                            message: '旧密码不正确',
+                            type: 'error'
+                        });
+                    }
+                    else if(data.result==-3){
+                        _this.$message({
+                            message: '新密码不能与旧密码相同',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+
+            // 上传图片
+            imageUploadSuccess: function(res, file){
+                var _this = this;
+                if(res.result==1){
+                    _this.files.push(res.image);
+                }else{
+                    _this.$message({
+                        message: '上传失败',
+                        type: 'error'
+                    });
+                }
+            },
+            // 删除图片
+            imageRemove: function(file, fileList){
+                var _this = this;
+                var res = file.response;
+                if(res.result==1){
+                    $.get('/removeImage',{'image':res.image},function (data, status) {
+                        if(data.result==1){
+                            _this.$message({
+                                message: '删除成功',
+                                type: 'success'
+                            });
+                        }else{
+                            _this.$message({
+                                message: '删除失败',
+                                ype: 'error'
+                            });
+                        }
+                    });
+                }else{
+                    _this.$message({
+                        message: '删除失败',
+                        type: 'error'
+                    });
+                }
+            },
+            // 修改签名
+            modifySign: function () {
+                var _this = this;
+                $.get('/modifysign',{
+                    'signature':_this.signature
+                },function (data, status) {
+                    if(data.result==1 && data.modifiedCount!=0){
+                        _this.$message({
+                            message: '修改成功',
+                            type: 'success'
+                        });
+                    }else if(data.result==1 && data.modifiedCount==0){
+                        _this.$message({
+                            message: '没有做出修改',
+                            type: 'warning'
+                        });
+                    }else{
+                        _this.$message({
+                            message: '修改失败',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+
+            //修改头像
+            handleAvatarSuccess(res, file) {
+                if(res.result==1){
+                    this.$message({
+                        message: '上传成功',
+                        type: 'success'
+                    });
+                    this.imageUrl = URL.createObjectURL(file.raw);
+                }else{
+                    this.$message({
+                        message: '上传失败',
+                        type: 'error'
+                    });
+                }
+            },
+            beforeAvatarUpload(file) {
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isLt2M;
+            },
+            modifyAvatarOk: function () {
+                this.dialogModifyAvatar = false;
+                window.location.href = '/';
+            }
+        }
+    });
+</script>
+</body>
+</html>
