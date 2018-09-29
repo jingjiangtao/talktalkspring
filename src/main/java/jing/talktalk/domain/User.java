@@ -1,13 +1,26 @@
 package jing.talktalk.domain;
 
-public class User {
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
+
+@Document(collection = "user")
+public class User implements Serializable {
+
+    @Id
+    private ObjectId Id;
     private String username = "";
     private String password = "";
     private int sumZan = 0;
     private int sumTalk = 0;
     private String signature = "";
     private String avatar = "default.jpg";
+
+    public ObjectId getId() {
+        return Id;
+    }
 
     public String getUsername() {
         return username;
@@ -55,5 +68,16 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return  this.getId()+" "
+                +this.getUsername()+" "
+                +this.getPassword()+" "
+                +this.getAvatar()+" "
+                +this.getSignature()+" "
+                +this.getSumTalk()+" "
+                +this.getSumZan();
     }
 }

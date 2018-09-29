@@ -17,11 +17,7 @@ public class TalkController {
 
     @ResponseBody
     @RequestMapping(value = "/getindexdata", method = RequestMethod.GET)
-    public User getIndexData(){
-        User user = new User();
-        user.setUsername("jing");
-        user.setPassword("123456");
-        user.setSignature("Don't worry don't cry");
-        return user;
+    public void getIndexData(){
+
     }
 }
