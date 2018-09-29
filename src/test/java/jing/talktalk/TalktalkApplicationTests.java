@@ -70,8 +70,9 @@ public class TalktalkApplicationTests {
     public void updatePwdTest(){
         try {
             dbDao.findUserByName("ddd").forEach((user)->{
-                user.setPassword("123456");
-                dbDao.updatePassword(user);
+                int sumZan = user.getSumZan();
+                user.setSumZan(++sumZan);
+                dbDao.updateUser(user);
                 dbDao.findUserByName("ddd").forEach((value)->{
                     System.out.println(value);
                 });
@@ -87,7 +88,7 @@ public class TalktalkApplicationTests {
         try {
             dbDao.findUserByName("ddd").get(0);
         }catch (Exception e){
-            System.out.println("用户名错误");
+            System.out.println("用户名不存在");
         }
 
     }

@@ -30,14 +30,9 @@ public class DBDao {
     }
 
     //修改用户
-    public int updatePassword(User user){
+    public int updateUser(User user){
 
-        Query query = new Query(where("username").is(user.getUsername()));
-        Update update = new Update();
-        update.set("password", user.getPassword());
-
-        mongoTemplate.updateFirst(query, update, User.class);
-
+        mongoTemplate.save(user);
         return 1;
     }
 
