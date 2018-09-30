@@ -4,15 +4,24 @@ import jing.talktalk.dao.TalkListDao;
 import jing.talktalk.dao.UserDao;
 import jing.talktalk.domain.TalkList;
 import jing.talktalk.domain.User;
+import jing.talktalk.service.TalkService;
 import org.bson.types.ObjectId;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -22,7 +31,17 @@ public class TalktalkApplicationTests {
     private UserDao userDao;
     @Autowired
     private TalkListDao talkListDao;
+    @Autowired
+    private TalkService talkService;
 
+    private MockMvc mockMvc;
+
+    @Autowired
+    protected WebApplicationContext wac;
+    @Before
+    public void setup() {
+        this.mockMvc = webAppContextSetup(this.wac).build();// 获取mockMvc实例
+    }
     @Test
     public void contextLoads() {
 
@@ -140,5 +159,18 @@ public class TalktalkApplicationTests {
         talkListDao.findTalksByUsername("vbs").forEach((value)->{
             System.out.println(value);
         });
+    }
+
+    @Test
+    public void getAllTalksTest(){
+        System.out.println(talkService.getAllTalks());
+    }
+
+    @Test
+    public void doSignTest() throws Exception{
+        String requestBody = "{\"username\":\"jing\", \"password\":\"123456\"}";
+        mockMvc.perform(
+                get("/dosign").contentType(MediaType.APPLICATION_JSON).content(requestBody));
+
     }
 }

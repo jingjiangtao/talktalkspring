@@ -593,6 +593,8 @@
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/vue.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="/js/md5.js"></script>
+<script src="/js/base64.min.js"></script>
 
 <!--页面自身的js文件-->
 <script>
@@ -680,7 +682,7 @@
                 }
                 $.post('/dologin', {
                     username: this.inputUsername,
-                    password: this.inputPassword
+                    password: Base64.encode(hex_md5(this.inputPassword))
                 }, function(data, status){
                     if(data.result==1){
                         //登录成功
@@ -733,7 +735,7 @@
                 }
                 $.post('/dosign', {
                     username: this.inputUsername,
-                    password: this.inputPassword
+                    password: Base64.encode(hex_md5(this.inputPassword))
                 }, function(data, status){
                     if(data.result==1){
                         window.location.href="/";
@@ -976,8 +978,8 @@
                 }
 
                 $.post('/updatepwd', {
-                    oldPwd:oldPwd,
-                    newPwd:newPwd
+                    oldPwd: Base64.encode(hex_md5(oldPwd)),
+                    newPwd: Base64.encode(hex_md5(newPwd))
                 }, function(data, status){
                     if(data.result==1){
                         _this.$message({
