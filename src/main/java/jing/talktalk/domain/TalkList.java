@@ -27,10 +27,6 @@ public class TalkList implements Serializable {
         return id;
     }
 
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }

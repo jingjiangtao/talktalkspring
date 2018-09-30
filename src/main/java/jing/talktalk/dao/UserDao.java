@@ -3,8 +3,6 @@ package jing.talktalk.dao;
 import jing.talktalk.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,27 +11,24 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Component
-public class DBDao {
+public class UserDao {
 
     @Autowired
     private MongoTemplate mongoTemplate;
 
     //增加用户
-    public int insertOneUser(User user){
+    public void insertOneUser(User user){
         mongoTemplate.insert(user);
-        return 1;
     }
     //删除用户
-    public int deleteOneUser(String username){
+    public void deleteOneUser(String username){
         mongoTemplate.remove(query(where("username").is(username)), "user");
-        return 1;
     }
 
     //修改用户
-    public int updateUser(User user){
+    public void updateUser(User user){
 
         mongoTemplate.save(user);
-        return 1;
     }
 
     //根据用户名查找用户

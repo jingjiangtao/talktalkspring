@@ -1,6 +1,8 @@
 package jing.talktalk;
 
-import jing.talktalk.dao.DBDao;
+import jing.talktalk.dao.TalkListDao;
+import jing.talktalk.dao.UserDao;
+import jing.talktalk.domain.TalkList;
 import jing.talktalk.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +17,9 @@ import java.util.ArrayList;
 public class TalktalkApplicationTests {
 
     @Autowired
-    private DBDao dbDao;
+    private UserDao userDao;
+    @Autowired
+    private TalkListDao talkListDao;
 
     @Test
     public void contextLoads() {
@@ -24,7 +28,7 @@ public class TalktalkApplicationTests {
 
     @Test
     public void finAllUsersTest(){
-        ArrayList<User> result = dbDao.findAllUsers();
+        ArrayList<User> result = userDao.findAllUsers();
         result.forEach((user)->{
             System.out.println(user.toString());
         });
@@ -34,7 +38,7 @@ public class TalktalkApplicationTests {
 
     @Test
     public void findUserByNameTest(){
-        ArrayList<User> result = dbDao.findUserByName("jing");
+        ArrayList<User> result = userDao.findUserByName("jing");
         System.out.println(result.size());
         try {
             System.out.println(result.get(0).toString());
@@ -45,7 +49,7 @@ public class TalktalkApplicationTests {
 
     @Test
     public void findUserByNamePwdTest(){
-        ArrayList<User> result = dbDao.findUserByNamePwd("jing", "4QrcOUm6Wau+VuBX8g+IPg==");
+        ArrayList<User> result = userDao.findUserByNamePwd("jing", "4QrcOUm6Wau+VuBX8g+IPg==");
         System.out.println(result.size());
         try {
             System.out.println(result.get(0).toString());
@@ -60,8 +64,8 @@ public class TalktalkApplicationTests {
         user.setUsername("ddd");
         user.setPassword("123456");
         user.setSignature("hahahahahah");
-        dbDao.insertOneUser(user);
-        dbDao.findUserByName("ddd").forEach((value)->{
+        userDao.insertOneUser(user);
+        userDao.findUserByName("ddd").forEach((value)->{
             System.out.println(value);
         });
     }
@@ -69,11 +73,11 @@ public class TalktalkApplicationTests {
     @Test
     public void updatePwdTest(){
         try {
-            dbDao.findUserByName("ddd").forEach((user)->{
+            userDao.findUserByName("ddd").forEach((user)->{
                 int sumZan = user.getSumZan();
                 user.setSumZan(++sumZan);
-                dbDao.updateUser(user);
-                dbDao.findUserByName("ddd").forEach((value)->{
+                userDao.updateUser(user);
+                userDao.findUserByName("ddd").forEach((value)->{
                     System.out.println(value);
                 });
             });
@@ -84,12 +88,18 @@ public class TalktalkApplicationTests {
 
     @Test
     public void deleteOneUserTest(){
-        dbDao.deleteOneUser("ddd");
+        userDao.deleteOneUser("ddd");
         try {
-            dbDao.findUserByName("ddd").get(0);
+            userDao.findUserByName("ddd").get(0);
         }catch (Exception e){
             System.out.println("用户名不存在");
         }
+
+    }
+
+    @Test
+    public void insertOneTalkTest(){
+        TalkList talkList = new TalkList();
 
     }
 
