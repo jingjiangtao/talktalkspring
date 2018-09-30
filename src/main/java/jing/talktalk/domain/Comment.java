@@ -43,4 +43,14 @@ public class Comment implements Serializable {
     public void setReplyTime(Date replyTime) {
         this.replyTime = replyTime;
     }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "replyUser='" + replyUser + '\'' +
+                ", replyToUser='" + replyToUser + '\'' +
+                ", replyContent='" + replyContent + '\'' +
+                ", replyTime=" + replyTime +
+                '}';
+    }
 }

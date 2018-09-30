@@ -98,4 +98,20 @@ public class TalkList implements Serializable {
     public void setTalkImages(ArrayList<String> talkImages) {
         this.talkImages = talkImages;
     }
+
+    @Override
+    public String toString() {
+        return "TalkList{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", avatarPath='" + avatarPath + '\'' +
+                ", talkContent='" + talkContent + '\'' +
+                ", time=" + time +
+                ", zanNum=" + zanNum +
+                ", zanPerson=" + zanPerson +
+                ", commentNum=" + commentNum +
+                ", commentContent=" + commentContent +
+                ", talkImages=" + talkImages +
+                '}';
+    }
 }

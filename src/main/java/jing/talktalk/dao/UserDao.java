@@ -22,7 +22,7 @@ public class UserDao {
     }
     //删除用户
     public void deleteOneUser(String username){
-        mongoTemplate.remove(query(where("username").is(username)), "user");
+        mongoTemplate.remove(query(where("username").is(username)), User.class);
     }
 
     //修改用户

@@ -1,7 +1,6 @@
 package jing.talktalk.dao;
 
 import jing.talktalk.domain.TalkList;
-import jing.talktalk.domain.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -24,7 +23,7 @@ public class TalkListDao {
     }
     //删除说说
     public void deleteOneTalk(ObjectId id){
-        mongoTemplate.remove(query(where("id").is(id)), "talkList");
+        mongoTemplate.remove(query(where("id").is(id)), TalkList.class);
     }
 
     //修改说说
@@ -37,6 +36,10 @@ public class TalkListDao {
         return (ArrayList<TalkList>) mongoTemplate.find(query(where("id").is(id)), TalkList.class);
     }
 
+    //根据用户名查找说说
+    public ArrayList<TalkList> findTalksByUsername(String username){
+        return (ArrayList<TalkList>) mongoTemplate.find(query(where("username").is(username)), TalkList.class);
+    }
 
     //查找所有说说
     public ArrayList<TalkList> findAllTalks(){
