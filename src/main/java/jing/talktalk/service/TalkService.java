@@ -5,14 +5,12 @@ import jing.talktalk.dao.TalkListDao;
 import jing.talktalk.dao.UserDao;
 import jing.talktalk.domain.TalkList;
 import jing.talktalk.domain.User;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.session.Session;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 @Service
 public class TalkService {
@@ -117,6 +115,23 @@ public class TalkService {
         User user = userDao.findUserByName((String)session.getAttribute("username")).get(0);
         user.setSignature(signature);
         userDao.updateUser(user);
+        return 1;
+    }
+
+    //点赞
+    public int doZan(ObjectId id, String username, HttpSession session){
+        System.out.println(id);
+        System.out.println(username);
+        ArrayList<TalkList> talkResult = talkListDao.findTalkById(id);
+        ArrayList<User> userResult = userDao.findUserByName(username);
+        if(talkResult.size() == 0 || userResult.size() == 0){
+            return -1;
+        }
+        talkResult.get(0).setZanNum(talkResult.get(0).getZanNum() + 1);
+        talkResult.get(0).getZanPerson().add((String)session.getAttribute("username"));
+        talkListDao.updateTalk(talkResult.get(0));
+        userResult.get(0).setSumZan(userResult.get(0).getSumZan() + 1);
+        userDao.updateUser(userResult.get(0));
         return 1;
     }
 }

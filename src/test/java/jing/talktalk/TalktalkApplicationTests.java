@@ -129,7 +129,7 @@ public class TalktalkApplicationTests {
 
     @Test
     public void deleteOneTalkTest(){
-        ArrayList<TalkList> result = talkListDao.findTalkById(new ObjectId("5bb04ed54c2ea415b04df16b"));
+        ArrayList<TalkList> result = talkListDao.findTalkById(new ObjectId("5bad9d63bf354212d010c836"));
         result.forEach((value)->{
             System.out.println(value);
             talkListDao.deleteOneTalk(value.getId());

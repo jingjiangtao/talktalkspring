@@ -2,7 +2,9 @@ package jing.talktalk.web;
 
 
 import com.alibaba.fastjson.JSONObject;
+import jing.talktalk.domain.TalkList;
 import jing.talktalk.service.TalkService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -100,9 +102,12 @@ public class TalkController {
 
     //点赞
     @ResponseBody
-    @RequestMapping(value = "/dozan", method = RequestMethod.GET)
-    public JSONObject doZan(){
-        return new JSONObject();
+    @RequestMapping(value = "/dozan", method = RequestMethod.POST)
+    public JSONObject doZan(ObjectId id, String username, HttpSession session){
+        int result = talkService.doZan(id, username, session);
+        JSONObject data = new JSONObject();
+        data.put("result", result);
+        return data;
     }
 
     //取消点赞
