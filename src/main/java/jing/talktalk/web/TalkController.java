@@ -2,7 +2,6 @@ package jing.talktalk.web;
 
 
 import com.alibaba.fastjson.JSONObject;
-import jing.talktalk.domain.TalkList;
 import jing.talktalk.service.TalkService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 
 @Controller
 public class TalkController {
@@ -102,9 +100,10 @@ public class TalkController {
 
     //点赞
     @ResponseBody
-    @RequestMapping(value = "/dozan", method = RequestMethod.POST)
-    public JSONObject doZan(ObjectId id, String username, HttpSession session){
-        int result = talkService.doZan(id, username, session);
+    @RequestMapping(value = "/dozan", method = RequestMethod.GET)
+    public JSONObject doZan(String id, String username, HttpSession session){
+
+        int result = talkService.doZan(new ObjectId(id), username, session);
         JSONObject data = new JSONObject();
         data.put("result", result);
         return data;
@@ -113,29 +112,38 @@ public class TalkController {
     //取消点赞
     @ResponseBody
     @RequestMapping(value = "/docancelzan", method = RequestMethod.GET)
-    public JSONObject doCancelZan(){
-        return new JSONObject();
+    public JSONObject doCancelZan(String id, String username, HttpSession session){
+        int result = talkService.doCancelZan(new ObjectId(id), username, session);
+        JSONObject data = new JSONObject();
+        data.put("result", result);
+        return data;
     }
 
     //回复
     @ResponseBody
     @RequestMapping(value = "/replay", method = RequestMethod.GET)
-    public JSONObject replay(){
-        return new JSONObject();
+    public JSONObject replay(String textContent, String replyUsername, String id, HttpSession session){
+        return talkService.replay(textContent, replyUsername, new ObjectId(id), session);
     }
 
     //删除一条说说
     @ResponseBody
     @RequestMapping(value = "/deletetalk", method = RequestMethod.GET)
-    public JSONObject deleteTalk(){
-        return new JSONObject();
+    public JSONObject deleteTalk(String id, HttpSession session){
+        int result = talkService.deleteTalk(new ObjectId(id), session);
+        JSONObject data = new JSONObject();
+        data.put("result", result);
+        return data;
     }
 
     //列出所有用户
     @ResponseBody
     @RequestMapping(value = "/allmembers", method = RequestMethod.GET)
     public JSONObject allMembers(){
-        return new JSONObject();
+        JSONObject data = new JSONObject();
+        data.put("result", 1);
+        data.put("userList", talkService.allMembers());
+        return data;
     }
 
 }

@@ -383,7 +383,7 @@
                         </el-upload>
                     </el-col>
                 </el-row>
-                <el-row v-for="(result, index) in listResult" :key="result.id">
+                <el-row v-for="(result, index) in listResult" :key="index">
                     <el-col :span="16" :offset="4">
                         <el-card class="talk-card">
                             <div slot="header">
@@ -457,7 +457,7 @@
         <el-container>
             <el-main>
                 <el-row v-if="myTalkResult.length==0"><el-col :span="16" :offset="4"><span>未发表过说说</span></el-col></el-row>
-                <el-row v-for="(result, index) in myTalkResult" :key="result.id">
+                <el-row v-for="(result, index) in myTalkResult" :key="index">
                     <el-col :span="16" :offset="4">
                         <el-card class="talk-card">
                             <div slot="header">
@@ -514,7 +514,7 @@
     <div v-if="memberlist" class="member-list">
         <el-container>
             <el-main>
-                <el-row v-for="(result, index) in memberResult" :key="result.id">
+                <el-row v-for="(result, index) in memberResult" :key="index">
                     <el-col :span="16" :offset="4">
                         <el-card class="member-card">
                             <div slot="header">
@@ -857,7 +857,7 @@
             deleteMyTalk:function (currList) {
                 var _this = this;
                 $.get('/deletetalk', {
-                    'id':currList.id
+                    'id':currList.idString
                 }, function(data, status){
                     if(data.result==1){
                         var index = _this.myTalkResult.indexOf(currList);
@@ -875,9 +875,9 @@
             // 点赞
             zan: function (currList) {
                 var _this = this;
-                $.post('/dozan', {
-                    'id':currList.id,
-                    'username':currList.username
+                $.get('/dozan', {
+                    'id': currList.idString,
+                    'username': currList.username
                 }, function(data, status){
                     if(data.result==1){
                         // 显示赞过图标
@@ -897,7 +897,7 @@
             cancelZan:function(currList){
                 var _this = this;
                 $.get('/docancelzan',{
-                    'id':currList.id,
+                    'id':currList.idString,
                     'username':currList.username
                 }, function (data, status) {
                     if(data.result==1){
@@ -924,7 +924,7 @@
                 $.get('/replay',{
                     'textContent':_this.replyTextarea,
                     'replyUsername': currList.username,
-                    'id': currList.id
+                    'id': currList.idString
                 }, function(data, status){
                     if(data.result==1){
                         currList.commentContent.unshift({

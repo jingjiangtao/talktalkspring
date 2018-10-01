@@ -13,6 +13,7 @@ public class TalkList implements Serializable {
 
     @Id
     private ObjectId id;
+    private String idString = "";
     private String username;
     private String avatarPath = "";
     private String talkContent = "";
@@ -25,6 +26,14 @@ public class TalkList implements Serializable {
 
     public ObjectId getId() {
         return id;
+    }
+
+    public String getIdString() {
+        return idString;
+    }
+
+    public void setIdString(String idString) {
+        this.idString = idString;
     }
 
     public String getUsername() {
@@ -71,10 +80,6 @@ public class TalkList implements Serializable {
         return zanPerson;
     }
 
-    public void setZanPerson(ArrayList<String> zanPerson) {
-        this.zanPerson = zanPerson;
-    }
-
     public int getCommentNum() {
         return commentNum;
     }
@@ -87,16 +92,8 @@ public class TalkList implements Serializable {
         return commentContent;
     }
 
-    public void setCommentContent(ArrayList<Comment> commentContent) {
-        this.commentContent = commentContent;
-    }
-
     public ArrayList<String> getTalkImages() {
         return talkImages;
-    }
-
-    public void setTalkImages(ArrayList<String> talkImages) {
-        this.talkImages = talkImages;
     }
 
     @Override

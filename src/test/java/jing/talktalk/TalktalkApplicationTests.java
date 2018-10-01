@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -161,10 +162,6 @@ public class TalktalkApplicationTests {
         });
     }
 
-    @Test
-    public void getAllTalksTest(){
-        System.out.println(talkService.getAllTalks());
-    }
 
     @Test
     public void doSignTest() throws Exception{
@@ -172,5 +169,13 @@ public class TalktalkApplicationTests {
         mockMvc.perform(
                 get("/dosign").contentType(MediaType.APPLICATION_JSON).content(requestBody));
 
+    }
+
+    @Test
+    public void deleteFile(){
+        String path = System.getProperty("user.dir") + "/src/main/resources/static/images/jing/20180928/2018092811175265200.png";
+        File file = new File(path);
+        System.out.println(file.getPath());
+        System.out.println(file.delete());
     }
 }
