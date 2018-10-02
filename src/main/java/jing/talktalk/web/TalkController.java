@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -80,8 +81,11 @@ public class TalkController {
     //修改头像
     @ResponseBody
     @RequestMapping(value = "/modiavatar", method = RequestMethod.POST)
-    public JSONObject modifyAvatar(){
-        return new JSONObject();
+    public JSONObject modifyAvatar(MultipartFile file, HttpSession session){
+        int result = talkService.modifyAvatar(file, session);
+        JSONObject data = new JSONObject();
+        data.put("result", result);
+        return data;
     }
 
     //发送动态
@@ -95,6 +99,13 @@ public class TalkController {
     @ResponseBody
     @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
     public JSONObject postImg(){
+        return new JSONObject();
+    }
+
+    //删除图片
+    @ResponseBody
+    @RequestMapping(value = "/removeImage", method = RequestMethod.GET)
+    public JSONObject remvoeImage(){
         return new JSONObject();
     }
 

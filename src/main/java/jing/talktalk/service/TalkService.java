@@ -9,9 +9,11 @@ import jing.talktalk.domain.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -225,6 +227,46 @@ public class TalkService {
             }
         });
         return allUsers;
+    }
+
+    //修改头像
+    public int modifyAvatar(MultipartFile file, HttpSession session){
+        if(file.isEmpty()){
+            return -1;
+        }
+        String username = (String) session.getAttribute("username");
+        String prefix = System.getProperty("user.dir") + "/src/main/resources/static/avatar/" + username + "/";
+        String filename =  username + ".png";
+        String avatarPath = username + "/" + username + ".png";
+        File dest = new File(prefix + filename);
+        if(!dest.getParentFile().exists()){
+            if(!dest.getParentFile().mkdir()){
+                return  -1;
+            }
+        }
+        if(dest.exists()){
+            if(!dest.delete()){
+                return -1;
+            }
+        }
+        try {
+            file.transferTo(dest);
+        }catch (Exception e){
+            return -1;
+        }
+
+        ArrayList<TalkList> talkResult = talkListDao.findTalksByUsername(username);
+        ArrayList<User> userResult = userDao.findUserByName(username);
+        talkResult.forEach((value)->{
+            value.setAvatarPath(avatarPath);
+            talkListDao.updateTalk(value);
+        });
+        userResult.forEach((value)->{
+            value.setAvatar(avatarPath);
+            userDao.updateUser(value);
+        });
+        session.setAttribute("avatar", avatarPath);
+        return 1;
     }
 
 }
